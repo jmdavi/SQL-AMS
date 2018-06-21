@@ -50,3 +50,23 @@ WHEN p IS NULL THEN 'Root'
 WHEN p is NOT NULL and n NOT IN (SELECT DISTINCT nvl(P,0) FROM BST) THEN 'Leaf'
 ELSE 'Inner' END
 FROM BST ORDER BY n;
+
+/*
+1 2 leaf 
+2 4 inner 
+3 2 leaf 
+4 15 inner 
+5 6 leaf 
+6 4 inner 
+7 6 leaf 
+8 9 leaf 
+9 11 inner 
+10 9 leaf 
+11 15 inner 
+12 13 leaf 
+13 11 inner 
+14 13 leaf 
+15 NULL root 
+
+if there is at least one row with a null value for tid in table3 you will get no rows returned. This is because to Oracle null is like saying "I don't know what this value is". Oracle can't say with certainty that the value you are searching for is definitely not in your sub-select because it doesn't know what this "not-known" value actually is. Also, the documentation says it works that way: http://docs.oracle.com/cd/B28359_01/server.111/b28286/conditions013.htm
+*/
