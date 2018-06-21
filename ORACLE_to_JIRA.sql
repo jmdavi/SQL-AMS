@@ -3,7 +3,7 @@ name: ORACLE_TO_JIRA.sql
 created: 8/17/2016
 DESCRIPTION - This creates a list of all the relevant JIRA tickets and their linked issues from different projects. It is meant to be used in unison with Generate_JIRA_Report.sql which uses this info to pull all relevant tasks into Oracle for reporting.
 
-url to use when prompted: jira.xyz.com/rest/api/2/search?jql=project=xyz%20and%20issuetype=xyz&fields=id,key,issuelinks%20%20&maxResults=2000
+url to use when prompted: jira.xyz.com/rest/api/2/search?jql=project=PROJECTW%20and%20issuetype=xyz&fields=id,key,issuelinks%20%20&maxResults=2000
 */
 
 /*
@@ -36,7 +36,7 @@ BEGIN
  UTL_HTTP.set_wallet('file:/file/path/here', 'xyz'); 
 --this sends out the request and collects its contents
 l_http_request  := UTL_HTTP.begin_request('&url');
-UTL_HTTP.set_authentication(l_http_request, '&AD_username', '&AD_pwd');
+UTL_HTTP.set_authentication(l_http_request, '&username', '&pwd');
  l_http_response := UTL_HTTP.get_response(l_http_request);
 
  -- Copy the response to the URL into the CLOB, it is JSON text as returned by JIRA
@@ -73,11 +73,11 @@ SELECT * FROM JIRAlist;
 
 --better displays the JIRA tickets and their linked issues, used in second file Generate_JIRA_Report.sql
 --this preserves the links between tasks for easy viewing, tweaked when used in second file
-SELECT tl.it_ticket, otherkey
+SELECT tl.PROJECTW_ticket, otherkey
 FROM JIRAlist,
 JSON_TABLE(term_document, '$.issues[*]'
 COLUMNS
-  (it_ticket VARCHAR2(100) PATH '$.key'
+  (PROJECTW_ticket VARCHAR2(100) PATH '$.key'
   ,NESTED PATH '$.fields.issuelinks[*]'
   COLUMNS ( otherkey PATH '$.inwardIssue.key' )
   )
