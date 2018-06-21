@@ -1,7 +1,7 @@
 /*
 name: ORACLE_TO_JIRA.sql
 created: 8/17/2016
-DESCRIPTION - This creates a list of all the relevant JIRA tickets and their linked issues from different projects. It is meant to be used in unison with GenerateTerminationReport.sql which uses this info to pull all relevant tasks into Oracle for reporting.
+DESCRIPTION - This creates a list of all the relevant JIRA tickets and their linked issues from different projects. It is meant to be used in unison with Generate_JIRA_Report.sql which uses this info to pull all relevant tasks into Oracle for reporting.
 
 url to use when prompted: jira.xyz.com/rest/api/2/search?jql=project=xyz%20and%20issuetype=xyz&fields=id,key,issuelinks%20%20&maxResults=2000
 */
